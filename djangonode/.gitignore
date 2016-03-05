@@ -10,6 +10,7 @@ migrations/
 node_modules/
 bower_components/
 db.sqlite3
+.idea/
 
 
 ### Python ###
