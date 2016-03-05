@@ -5,4 +5,6 @@ var querystring = require('querystring');
 
 io.on('connection', function(socket){
     console.log("Conectado al socket");
+    
+    socket.emit('test',{'prueba':'Hola'});
 });
