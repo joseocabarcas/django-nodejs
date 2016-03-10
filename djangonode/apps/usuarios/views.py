@@ -1,4 +1,7 @@
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
+from django.template import RequestContext
+
 from .forms import LoginForm
 from django.views.generic import TemplateView
 from django.contrib.auth import login,authenticate,logout
@@ -14,30 +17,27 @@ class LoginView(TemplateView):
         return render(request, self.template_name,{'login_form':self.login_form})
     
     def post(self, request):
-        form = LoginForm(request.POST)
-        if form.is_valid():
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
             # <process form cleaned data>
-            usuario= authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password'])
+            usuario= authenticate(username=login_form.cleaned_data['username'],password=login_form.cleaned_data['password'])
             if usuario is not None:
-		        if usuario.is_active:
-			        login(request,usuario)
-			        print "1"
-			        return redirect('home/')
-		        else:
-			        print "2"
-			        return HttpResponse("You're account is disabled.")
-            
-            
-        return render(request, self.template_name, {'login_form': self.login_form})
+                if usuario.is_active:
+                    login(request,usuario)
+                    return redirect('home/')
+                else:
+                    return render(request, self.template_name, {'login_form': login_form,
+                                                                'error_disabled': "You're account is disabled."})
+        return render(request, self.template_name, {'login_form': login_form})
         
 def Logout(request):
-	logout(request)
-	request.session.flush()
-	return redirect('/')
+    logout(request)
+    request.session.flush()
+    return redirect('/')
 	
 	
 class HomeView(TemplateView):
-    
+
     template_name = 'home.html'
     
     def get(self, request):

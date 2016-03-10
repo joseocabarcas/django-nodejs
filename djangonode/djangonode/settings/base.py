@@ -46,8 +46,7 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'djangonode.urls'
 
-print BASE_DIR
-print 'A'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

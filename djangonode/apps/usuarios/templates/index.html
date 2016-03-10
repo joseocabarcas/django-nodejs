@@ -6,35 +6,52 @@
 
 
 <div class="row">
-  {% if login_form.errors %}
-  <div class="alert alert-danger container" role="alert">
-    {% for error in login_form.non_field_errors %}
-    <li>{{ error }}</li>
-    {% endfor %}
-  </div>
-  {% endif %}
+      {% if login_form.errors  %}
+          <div class="alert alert-danger container alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {% for error in login_form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </div>
+      {% endif %}
 
-  <form class="col-md-6 col-md-offset-3" method="POST">
-    {% csrf_token %}
-    <div class="card">
-      <div class="card-header">
-        Iniciar Sesion
-      </div>
-      <div class="card-block">
-        <fieldset class="form-group">
-          <label for="id_username">Username</label>
-          {{login_form.username}}
-        </fieldset>
 
-        <fieldset class="form-group">
-         <label for="id_password">Password</label>
-         {{login_form.password}}
-       </fieldset>
-     </div>
-     <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
-   </div>
- </form>
+      <form class="col-md-6 col-md-offset-3 " method="POST">
+        {% csrf_token %}
+        <div class="card">
+          <div class="card-header">
+            Iniciar Sesion
+          </div>
+          <div class="card-block">
+            <fieldset class="form-group">
+                <label for="id_username">Username</label>
+                {{login_form.username}}
+                {% if login_form.username.errors %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{login_form.username.errors}}
+                    </div>
+                {% endif %}
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label for="id_password">Password</label>
+                {{login_form.password}}
+                {% if login_form.password.errors %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{login_form.password.errors}}
+                    </div>
+                {% endif %}
+           </fieldset>
+         </div>
+         <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+       </div>
+     </form>
+
 </div>
 
 
 {% endblock maincontent %}
+
+

@@ -1,8 +1,7 @@
 from django.conf.urls import include, url
-from .views import LoginView,HomeView
-
+from .views import LoginView,HomeView, Logout
 urlpatterns = [
     url(r'^$', LoginView.as_view(), name="/"),
     url(r'^home/$', HomeView.as_view(), name="home/"),
-    url(r'^logout/$', 'apps.usuarios.views.Logout',name='logout/'),
+    url(r'^logout/$', Logout, name='logout/'),
 ]
