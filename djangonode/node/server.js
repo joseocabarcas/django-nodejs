@@ -22,7 +22,7 @@ Socket.prototype.run = function(){
 
     this.io.sockets.on('connection', function (socket) {
         console.log("Conectado al socket");
-        socket.emit('test', socket.handshake.user);
+        socket.broadcast.emit('test', socket.handshake.user);
     });
 };
 
