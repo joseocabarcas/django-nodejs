@@ -5,6 +5,10 @@ from django.template import RequestContext
 from .forms import LoginForm
 from django.views.generic import TemplateView
 from django.contrib.auth import login,authenticate,logout
+import redis as Redis
+import json
+
+redis = Redis.StrictRedis()
 
 # Create your views here.
 class LoginView(TemplateView):
@@ -24,6 +28,13 @@ class LoginView(TemplateView):
             if usuario is not None:
                 if usuario.is_active:
                     login(request,usuario)
+                    key = 'session:%s' % request.session.session_key
+                    data = {
+                        'username':request.user.username
+                    }
+                    value = json.dumps(data)
+                    redis.setex(key,1209600,value)
+                    #print key
                     return redirect('home/')
                 else:
                     return render(request, self.template_name, {'login_form': login_form,
@@ -41,5 +52,5 @@ class HomeView(TemplateView):
     template_name = 'home.html'
     
     def get(self, request):
-        
+        print request.session.session_key
         return render(request, self.template_name)

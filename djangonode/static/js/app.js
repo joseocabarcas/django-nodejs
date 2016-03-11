@@ -7,7 +7,9 @@ app.config(function($interpolateProvider) {
 
 
 app.factory('socket', function($rootScope) {
-    var socket = io.connect('https://djangonode-joseomar94.c9users.io/:3000');
+    //var socket = io.connect('https://djangonode-joseomar94.c9users.io/:3000');
+    var socket = io.connect('http://localhost:3000');
+
     return {
         on: function(eventName, callback) {
             socket.on(eventName, function() {
